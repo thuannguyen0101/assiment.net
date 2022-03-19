@@ -1,0 +1,17 @@
+﻿@model IEnumerable<ShoppingCart.Models.Product>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-body">@Html.DisplayFor(modelItem => item.Name) -  @Html.DisplayFor(modelItem => item.Price) đ</div>
+                <div class="panel-footer">
+                    <a class="btn btn-success btn-sm" href="@Url.Action("Add", "Cart", new { SanPhamID = item.Id })">
+                        <span class="glyphicon glyphicon-shopping-cart"></span>  Add to Cart
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

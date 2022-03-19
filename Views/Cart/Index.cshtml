@@ -1,0 +1,59 @@
+﻿@model IEnumerable<ShoppingCart.Models.CartItem>
+<p>
+    @Html.ActionLink("Add products to cart", "Index", "Products")
+</p>
+
+@if (Model == null || Model.Count() == 0)
+{
+    <p class="text-info text-center">
+        Cart has no item
+    </p>
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UnitPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalPrice)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a href="@Url.Action("Details","Products",new { id = item.ProductId})">@item.ProductName</a>
+                </td>
+                <td>
+                    <form action="@Url.Action("Edit")" method="get">
+                        <input type="hidden" name="SanPhamID" value="@item.ProductId" />
+                        <input type="number" min="1" step="1" name="soluongmoi" value="@item.Quantity" />
+                        <button type="submit" class="btn btn-primary btn-sm"> Update </button>
+                    </form>
+                </td>
+                <td>
+                    @item.UnitPrice.ToString("#,##0").Replace(',', ',') đ
+                </td>
+                <td>
+                    @item.TotalPrice.ToString("#,##0").Replace(',', ',') đ
+                </td>
+                <td>
+              
+                    <a href="@Url.Action("Delete",new { SanPhamID = item.ProductId})" onclick="return confirm('Are you sure you want to delete?');" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+
